@@ -1,4 +1,4 @@
-from resource.identity import Identity
+from obolary.resource.identity import Identity
 
 class Label(Identity):
     

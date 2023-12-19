@@ -6,12 +6,12 @@ import json
 import uuid
 from datetime import datetime
 
-from rest.context import Context
+from obolary.rest.context import Context
 
 # forward references
 if globals().get( 'Status' ) is None:
     class Identity(BaseModel): pass
-    from resource.status import Status
+    from obolary.resource.status import Status
 
 # id format definition
 class Id(BaseModel):
@@ -53,7 +53,7 @@ class Identity(BaseModel):
     
     # POST /[kind]/get/[id]
     # POST /[kind]/get { [filter] }
-    def get( self, context : Context ) -> (Self | [Self], Status):
+    def get( self, context : Context ) -> (Self | list, Status):
         return None, None
     
     # POST /[kind]/set/[id] { [resource] }

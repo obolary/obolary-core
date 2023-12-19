@@ -1,10 +1,11 @@
 from typing import Optional, Self
-import log
 import http
+
+import obolary.log as log
 
 # forward references
 if globals().get( 'Identity' ) is None:
-    from resource.identity import Identity
+    from obolary.resource.identity import Identity
 
 StatusCodeToHttpStatus = {
    'internal_server': http.HTTPStatus.INTERNAL_SERVER_ERROR,

@@ -1,10 +1,10 @@
-module github.com/ensi-ai/ensi-ai-core/golang
+module github.com/obolary/obolary-core/golang
 
 go 1.21
 
 require (
 	github.com/caarlos0/env/v6 v6.10.1
-	github.com/ensi-ai/ensi-ai-core v1.0.0
+	github.com/obolary/obolary-core v1.0.0
 	github.com/facebookgo/httpcontrol v0.0.0-20150708234001-ccde4420e1fe
 	github.com/google/uuid v1.4.0
 )

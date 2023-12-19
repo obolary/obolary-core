@@ -5,7 +5,7 @@ import sys
 import inspect
 from datetime import datetime
 
-from log.config import config
+from obolary.log.config import config
 
 class Log(BaseModel):
 

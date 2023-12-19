@@ -1,6 +1,6 @@
 from typing import Optional
 
-from resource.identity import Identity
+from obolary.resource.identity import Identity
 
 class Target(Identity):
     

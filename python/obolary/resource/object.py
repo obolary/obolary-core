@@ -1,8 +1,8 @@
 from typing import Optional, Self
 
-from rest.context import Context
-from resource.identity import Identity
-from resource.identity import Status
+from obolary.rest.context import Context
+from obolary.resource.identity import Identity
+from obolary.resource.identity import Status
 
 class Object(Identity):
     
@@ -24,7 +24,7 @@ class Object(Identity):
     # POST /[kind]/get/[id]
     # POST /[kind]/get { [filter] }
     # POST /[kind]/get/[id]/[path]
-    def get( self, context : Context, path : str = '' ) -> (Self | [Self], Status):
+    def get( self, context : Context, path : str = '' ) -> (Self | list, Status):
         if not path:
             return super().get( context )
         # get path list, if directory, or 
