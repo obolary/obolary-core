@@ -9,7 +9,8 @@ setup(
     url = 'https://github.com/obolary/obolary-core',
     install_requires = [ 
         'pydantic', 
-        'pydantic-settings' 
+        'pydantic-settings' ,
+        'boto3'
     ],
     packages = find_packages( include=[ 'obolary.log', 'obolary.resource', 'obolary.rest' ] ),
     python_requires = '>=3.11'
