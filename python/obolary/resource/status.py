@@ -3,10 +3,6 @@ import http
 
 import obolary.log as log
 
-# forward references
-if globals().get( 'Identity' ) is None:
-    from obolary.resource.identity import Identity
-
 StatusCodeToHttpStatus = {
    'internal_server': http.HTTPStatus.INTERNAL_SERVER_ERROR,
    'bad_request': http.HTTPStatus.BAD_REQUEST,
@@ -16,7 +12,7 @@ StatusCodeToHttpStatus = {
    'forbidden': http.HTTPStatus.FORBIDDEN
 }
 
-class Status(Identity):
+class Status:
     
     code : str
     description : Optional[ str ] = ''
