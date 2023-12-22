@@ -1,0 +1,10 @@
+#!/bin/bash
+alias k='kubectl'
+alias pods='kubectl get pods'
+alias logs='kubectl logs'
+alias svcs='kubectl get service'
+alias deps='kubectl get deployment'
+alias sets='kubectl get statefulset'
+alias pvcs='kubectl get pvc'
+
+export PATH=${PATH}:${GOPATH}/src/github.com/obolary/obolary-core/shell

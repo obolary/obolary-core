@@ -8,16 +8,23 @@ import (
 	"github.com/obolary/obolary-core/golang/log"
 )
 
+type Kind string
+
+func (kind Kind) String() string {
+	return ((string)(kind))
+}
+
 type Identity struct {
-	Kind          string                 `json:"kind,omitempty"`
-	ID            string                 `json:"id,omitempty" index:"identity.id" unique:"true"`
-	OwnerID       string                 `json:"owner_id,omitempty" index:"identity.ownerid"`
-	LabelIDs      []string               `json:"label_ids,omitempty" index:"identity.labelids"`
-	Created       *time.Time             `json:"created,omitempty"`
-	Updated       *time.Time             `json:"updated,omitempty"`
+	Kind          Kind                   `json:"kind,omitempty"`
+	Id            string                 `json:"id,omitempty" index:"identity.id" unique:"true"`
+	OwnerId       string                 `json:"owner_id,omitempty" index:"identity.ownerid"`
+	LabelIds      []string               `json:"label_ids,omitempty" index:"identity.labelids"`
+	Created       time.Time              `json:"created,omitempty"`
+	Updated       time.Time              `json:"updated,omitempty"`
 	Documentation string                 `json:"documentation,omitempty"`
 	Extension     map[string]interface{} `json:"-"`
 }
+
 type Blob map[string]interface{}
 
 func (blob Blob) SetId(id string) {

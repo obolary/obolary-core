@@ -39,8 +39,20 @@ func (l *Log) Emit(template string, args ...interface{}) {
 	fmt.Printf("%s | %s | %s | %s:%d | %s | %s\n", l.Level, l.Timestamp, l.Process, l.File, l.Line, l.Function, message)
 }
 
-func Trace(template string, args ...interface{}) {
+func Trace(args ...interface{}) {
 	if config.TraceEnabled {
+		var template string
+		if len(args) > 0 {
+			var ok bool
+			if template, ok = args[0].(string); !ok {
+				return
+			}
+			if len(args) > 1 {
+				args = args[1:]
+			} else {
+				args = nil
+			}
+		}
 		NewLog("TRACE", 1).Emit(template, args...)
 	}
 }

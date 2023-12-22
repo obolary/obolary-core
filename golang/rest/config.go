@@ -4,16 +4,20 @@ import (
 	"github.com/kelseyhightower/envconfig"
 )
 
-type Config struct {
-	RestHostAndPort             string `default:":8080"`
-	RestBasePath                string `default:"/obolary/1.0"`
-	RestTransportMaxIdleConns   int    `default:256"`
-	RestTransportMaxTries       int    `default:3"`
-	RestTransportRequestTimeout int    `default:60"`
+type Configuration struct {
+	HostAndPort             string `default:":8080"`
+	BasePath                string `default:"/obolary/1.0"`
+	TransportMaxIdleConns   int    `default:"256"`
+	TransportMaxTries       int    `default:"3"`
+	TransportRequestTimeout int    `default:"60"`
 }
 
-var config Config
+var config Configuration
 
 func init() {
 	envconfig.Process("rest", &config)
+}
+
+func Config() *Configuration {
+	return &config
 }

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+for i in $(find . -name ".git")
+do 
+	cd $i/..
+	echo $(pwd)
+	echo "++ semver ++"
+	echo $(git describe --abbrev=0 --tags)
+	cd -
+done
