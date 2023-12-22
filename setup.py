@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 setup(
     name = 'obolary-core',
@@ -12,6 +12,7 @@ setup(
         'pydantic-settings' ,
         'boto3'
     ],
-    packages = find_packages( include=[ 'obolary.log', 'obolary.resource', 'obolary.rest' ] ),
+    packages = find_namespace_packages( where='python/', include=[ 'obolary.log', 'obolary.resource', 'obolary.rest' ] ),
+    package_dir = { '': 'python' },
     python_requires = '>=3.11'
 )

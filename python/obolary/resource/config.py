@@ -6,7 +6,7 @@ from botocore.client import Config as BotoConfig
 
 class Config(BaseSettings):
     
-    s3_enabled : Optional[ bool ] = True
+    s3_enabled : Optional[ bool ] = False
     s3_bucket : Optional[ str ] = ''
     s3_endpoint_url : Optional[ str ] = ''
     s3_access_key : Optional[ str ] = ''
@@ -30,5 +30,5 @@ class Config(BaseSettings):
                 config = BotoConfig( signature_version = self.s3_signature_version ),
                 region_name = self.s3_region_name             
             )
-        
+
 config = Config()

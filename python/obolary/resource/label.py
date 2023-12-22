@@ -6,6 +6,9 @@ from obolary.resource.status import Status
 
 class Label(Identity):
     
+    # NOTE, well-known labels include,
+    #   collection  - a resource collection, e.g., my-default-collection
+    #   endpoint    - a target reference, e.g., /object/delete
     name : str
     value : str
 

@@ -1,4 +1,5 @@
 from typing import Optional, Self
+from pydantic import BaseModel
 import http
 
 import obolary.log as log
@@ -12,14 +13,11 @@ StatusCodeToHttpStatus = {
    'forbidden': http.HTTPStatus.FORBIDDEN
 }
 
-class Status:
+class Status(BaseModel):
     
     code : str
     description : Optional[ str ] = ''
     uri : Optional[ str ] = ''
-
-    def __init__( self, **kwargs ):
-        super().__init__( kind = 'status', **kwargs )
 
     def status( self ) -> int:
         if self.code in StatusCodeToHttpStatus:

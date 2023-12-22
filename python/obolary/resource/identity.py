@@ -55,13 +55,16 @@ class Identity(BaseModel):
     documentation : Optional[ str ] = ''
     
     def __init__( self, kind : str, **kwargs ):
-        id = Id.new( kind )
+        id = Id.new( kind ).string()
         super().__init__( kind = kind, id = id, **kwargs )
 
     # POST /[kind]/create
     def create( self, context : Context ) -> (Self, Status):
         if context is None:
             return None, StatusBadRequest.clone( 'missing required context' )
+        if not context.owner_id:
+            return None, StatusBadRequest.clone( 'context missing owner-id (an id of a label named, "collection" with at least one entity member)' )
+        self.owner_id = context.owner_id
         response = requests.post(
             f'{config.data_service_url_and_path}/{self.kind}/create',
             headers={
