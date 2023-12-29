@@ -64,10 +64,10 @@ class Object(Identity):
             full = f'{self.id}/{path}'
             response = config.s3.download_fileobj( Bucket=config.s3_bucket, Key=full, Fileobj = output  )
             log.debug( response )
-            log.debug( str(output.getvalue()) )
+            #log.debug( str(output.getvalue()) )
         except ClientError as e:
             log.alarm( f'get failed due to error, {e}' )
-        return None, None
+        return output, None
     
     # POST /[kind]/set/[id] { [resource] }
     # POST /[kind]/set/[id]/[path] [file]
@@ -88,19 +88,63 @@ class Object(Identity):
             log.alarm( f'set failed due to error, {e}' )
         return None, None
 
-    # POSt /[kind]/list/[id]
-    def list( self, context : Context, path : str = '') -> Status:
+    # POST /[kind]/list/[id]
+    # {'ResponseMetadata': 
+    #   {
+    #       'HTTPStatusCode': 200, 
+    #       'HTTPHeaders': {
+    #           'date': 'Tue, 26 Dec 2023 17: 16: 15 GMT', 
+    #           'content-type': 'application/xml', 
+    #           'content-length': '873', 
+    #           'connection': 'keep-alive', 
+    #           'vary': 'Accept-Encoding', 
+    #           'server': 'cloudflare', 
+    #           'cf-ray': '83baf8752fe07279-EWR'
+    #       }, 
+    #       'RetryAttempts': 0
+    #   }, 
+    #   'IsTruncated': False, 
+    #   'Marker': '', 
+    #   'Contents': [
+    #       {
+    #           'Key': 'eyJLIjogIm9iamVjdCIsICJFIjogIjZhZWZlYjQ1LTBhNTgtNDExOS04NzA5LWZhMWU1NTEwMDQwZiJ9/boo.txt', 
+    #           'LastModified': datetime.datetime(2023, 12,26,17,14,43,842000, tzinfo=tzutc()), 
+    #           'ETag': '"5d41402abc4b2a76b9719d911017c592"', 
+    #           'Size': 5, 
+    #           'StorageClass': 'STANDARD', 
+    #           'Owner': {'DisplayName': '0c323972e3858e19e37a4a4b4f84d6c2', 'ID': '0c323972e3858e19e37a4a4b4f84d6c2' }
+    #       }
+    #   ], 
+    #   'Name': 'ensi-ai-zi', 
+    #   'Prefix': 'eyJLIjogIm9iamVjdCIsICJFIjogIjZhZWZlYjQ1LTBhNTgtNDExOS04NzA5LWZhMWU1NTEwMDQwZiJ9/', 
+    #   'Delimiter': '/', 
+    #   'MaxKeys': 1000, 
+    #   'CommonPrefixes': [
+    #         {
+    #           'Prefix': 'eyJLIjogIm9iamVjdCIsICJFIjogIjZhZWZlYjQ1LTBhNTgtNDExOS04NzA5LWZhMWU1NTEwMDQwZiJ9/sally/'
+    #         }
+    #     ]
+    # }
+    def list( self, context : Context, path : str = '') -> ([str], Status):
         if context is None:
             return None, StatusBadRequest.clone( 'missing required context' )
         # TODO, this belongs in the resource manager, placed here for prototype
         if not config.s3_enabled:
             return StatusBadRequest.clone('lake not enabled').alarm()
         # set path bytes
+        files = []
         try:
             full = f'{self.id}/{path}'
             response = config.s3.list_objects( Bucket=config.s3_bucket, Prefix=full, Delimiter='/' )
+            if 'Contents' in response:
+                contents = response[ 'Contents' ]
+                for content in contents:
+                    if 'Key' in content:
+                        key = content[ 'Key' ]
+                        file = os.path.basename( key )
+                        files.append( file )
             log.debug( response )
         except ClientError as e:
             log.alarm( f'list failed due to error, {e}' )
-        return None, None
+        return files, None
         
