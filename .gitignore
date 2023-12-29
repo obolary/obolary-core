@@ -1,3 +1,4 @@
 .DS_Store
 obolary_core.egg-info
 build
+nb_unit_test.ipynb
