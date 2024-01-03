@@ -130,7 +130,7 @@ class Object(Identity):
             return None, StatusBadRequest.clone( 'missing required context' )
         # TODO, this belongs in the resource manager, placed here for prototype
         if not config.s3_enabled:
-            return StatusBadRequest.clone('lake not enabled').alarm()
+            return None, StatusBadRequest.clone('lake not enabled').alarm()
         # set path bytes
         files = []
         try:
